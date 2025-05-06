@@ -29,7 +29,11 @@ int	gen_exec(char *argv[], int i, char *envp[])
 {
 	int		pipe[2];
 	pid_t	pid;
-	
+	int		to_pipe;
+
+	to_pipe = 0;
+	if (strcmp(argv[i], "|") == 0)
+		to_pipe = 1;
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -44,7 +48,8 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		argv += i;
 		i = 0;
-		while (argv[i] != NULL && strcmp(argv[i], "|") && strcmp(argv[i], ";"))
+		while (argv[i] != NULL && strcmp(argv[i], "|") != 0 && \
+								strcmp(argv[i], ";") != 0)
 			i++;
 		status = gen_exec(argv, i, envp);
 	}
